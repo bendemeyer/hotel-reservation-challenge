@@ -1,7 +1,8 @@
 from django.db import models
 from solo.models import SingletonModel
 from hotel_reservations.validators import (is_valid_date_range, is_available,
-                                           is_positive, is_not_negative, is_email_address)
+                                           is_positive, is_not_negative,
+                                           is_email_address, is_future_date)
 
 
 class HotelConfiguration(SingletonModel):
@@ -14,7 +15,7 @@ class Reservation(models.Model):
     id.primary_key = True
     name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, validators=[is_email_address])
-    check_in = models.DateField()
+    check_in = models.DateField(validators=[is_future_date])
     check_out = models.DateField()
 
     def clean(self):

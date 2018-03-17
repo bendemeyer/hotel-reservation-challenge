@@ -1,6 +1,7 @@
 import re
 from django.core.exceptions import ValidationError
 from datetime import timedelta
+import datetime
 
 
 def is_positive(num):
@@ -18,6 +19,12 @@ def is_email_address(email):
     regex = re.compile(email_pattern)
     if regex.match(email) is None:
         raise ValidationError("Value must be an email address")
+
+
+def is_future_date(date):
+    today = datetime.date.today()
+    if today > date:
+        raise ValidationError("Provided date must not be in the past")
 
 
 def is_valid_date_range(start, end):
