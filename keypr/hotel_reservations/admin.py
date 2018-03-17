@@ -1,3 +1,6 @@
 from django.contrib import admin
+from solo.admin import SingletonModelAdmin
+from hotel_reservations.models import HotelConfiguration
 
-# Register your models here.
+
+admin.site.register(HotelConfiguration, SingletonModelAdmin)
