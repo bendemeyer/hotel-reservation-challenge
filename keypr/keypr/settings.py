@@ -56,7 +56,7 @@ ROOT_URLCONF = 'keypr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['hotel_reservations/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

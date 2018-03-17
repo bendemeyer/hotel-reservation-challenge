@@ -27,10 +27,11 @@ class ReservationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        check_in = cleaned_data["check_in"]
-        check_out = cleaned_data["check_out"]
-        is_valid_date_range(check_in, check_out)
-        is_available(check_in, check_out)
+        check_in = cleaned_data.get("check_in")
+        check_out = cleaned_data.get("check_out")
+        if check_in and check_out:
+            is_valid_date_range(check_in, check_out)
+            is_available(check_in, check_out)
         return cleaned_data
 
 
