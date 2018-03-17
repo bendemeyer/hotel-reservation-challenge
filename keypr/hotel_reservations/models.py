@@ -1,24 +1,7 @@
 from django.db import models
 from solo.models import SingletonModel
-from django.core.exceptions import ValidationError
-import re
-
-
-def is_positive(num):
-    if num <= 0:
-        raise ValidationError("Value must be greater than 0")
-
-
-def is_not_negative(num):
-    if num < 0:
-        raise ValidationError("Value must be greater than or equal to 0")
-
-
-def is_email_address(email):
-    email_pattern = r"^\w+@\w+\.\w+$"
-    regex = re.compile(email_pattern)
-    if regex.match(email) is None:
-        raise ValidationError("Value must be an email address")
+from hotel_reservations.validators import (is_valid_date_range, is_available,
+                                           is_positive, is_not_negative, is_email_address)
 
 
 class HotelConfiguration(SingletonModel):
@@ -33,3 +16,9 @@ class Reservation(models.Model):
     email = models.CharField(max_length=255, validators=[is_email_address])
     check_in = models.DateField()
     check_out = models.DateField()
+
+    def clean(self):
+        super().clean()
+        if self.check_in and self.check_out:
+            is_valid_date_range(self.check_in, self.check_out)
+            is_available(self.check_in, self.check_out)

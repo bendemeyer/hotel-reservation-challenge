@@ -1,0 +1,38 @@
+import re
+from django.core.exceptions import ValidationError
+from datetime import timedelta
+
+
+def is_positive(num):
+    if num <= 0:
+        raise ValidationError("Value must be greater than 0")
+
+
+def is_not_negative(num):
+    if num < 0:
+        raise ValidationError("Value must be greater than or equal to 0")
+
+
+def is_email_address(email):
+    email_pattern = r"^\w+@\w+\.\w+$"
+    regex = re.compile(email_pattern)
+    if regex.match(email) is None:
+        raise ValidationError("Value must be an email address")
+
+
+def is_valid_date_range(start, end):
+    if start >= end:
+        raise ValidationError("Check-out date must be after check-in date")
+
+
+def is_available(start, end):
+    from hotel_reservations.models import Reservation, HotelConfiguration
+
+    hotel_config = HotelConfiguration.get_solo()
+    bookable = int(hotel_config.room_count * (hotel_config.overbooking_level + 1))
+    check_date = start
+    while check_date < end:
+        booked = Reservation.objects.filter(check_in__lte=check_date, check_out__gt=check_date).count()
+        if booked >= bookable:
+            raise ValidationError("There are no rooms available for the selected date range")
+        check_date += timedelta(days=1)
