@@ -36,7 +36,7 @@ class TestValidators(TestCase):
         valid_emails = [
             "real@example.com",
             "fake@fake.fake",
-            "some.long-convoluded--email{}with+crazy()characters@sub-domain.some_domain.co.uk"
+            "some.long-convoluted--email{}with+crazy()characters@sub-domain.some_domain.co.uk"
         ]
         try:
             for email in valid_emails:
