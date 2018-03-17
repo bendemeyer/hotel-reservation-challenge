@@ -16,10 +16,7 @@ class NewReservation(View):
     def post(self, request, *args):
         form = ReservationForm(request.POST)
         if form.is_valid():
-            reservation = Reservation(name=form.cleaned_data["name"],
-                                      email=form.cleaned_data["email"],
-                                      check_in=form.cleaned_data.get("check_in"),
-                                      check_out=form.cleaned_data["check_out"])
+            reservation = Reservation(**form.cleaned_data)
             reservation.save()
             return HttpResponseRedirect("/confirmation/")
         else:
