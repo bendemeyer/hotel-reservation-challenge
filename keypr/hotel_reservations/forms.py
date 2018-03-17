@@ -36,3 +36,4 @@ class ReservationForm(forms.ModelForm):
 
 class ReservationAdmin(admin.ModelAdmin):
     form = ReservationForm
+    list_display = ['name', 'check_in', 'check_out']
