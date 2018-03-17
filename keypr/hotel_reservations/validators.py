@@ -15,7 +15,7 @@ def is_not_negative(num):
 
 
 def is_email_address(email):
-    email_pattern = r"^\w+@\w+\.\w+$"
+    email_pattern = r"^[^\s@]+@[\w\.\-]+\.[\w\.\-]+$"
     regex = re.compile(email_pattern)
     if regex.match(email) is None:
         raise ValidationError("Value must be an email address")
