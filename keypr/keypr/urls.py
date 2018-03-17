@@ -1,23 +1,14 @@
-"""keypr URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from hotel_reservations.views.new_reservation import NewReservation
+from hotel_reservations.views.confirmation import Confirmation
+from hotel_reservations.views.api.reservations import ReservationAPI
+from hotel_reservations.views.api.configuration import HotelConfigurationAPI
 
 urlpatterns = [
     path('', NewReservation.as_view()),
+    path('confirmation/', Confirmation.as_view()),
+    path('reservations/', ReservationAPI.as_view()),
+    path('config/', HotelConfigurationAPI.as_view()),
     path('admin/', admin.site.urls),
 ]
