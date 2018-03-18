@@ -2,6 +2,8 @@
 
 A small Django app to simulate a configurable hotel reservations system
 
+Uses SQLite as its data store. The data is non-relational, so depending on expected usage a NoSQL store might be a valid choice. But for the purposes of this project I choose to keep it as portable as possible, which SQLite acheives very well.
+
 ## Setup
 
 ### Requirements
