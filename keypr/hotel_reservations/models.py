@@ -29,3 +29,8 @@ class Reservation(models.Model):
         if self.check_in and self.check_out:
             is_valid_date_range(self.check_in, self.check_out)
             is_available(self.check_in, self.check_out)
+
+    def includes_date(self, date):
+        if self.check_in <= date and self.check_out > date:
+            return True
+        return False

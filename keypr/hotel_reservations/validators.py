@@ -37,9 +37,10 @@ def is_available(start, end):
 
     hotel_config = HotelConfiguration.get_solo()
     bookable = int(hotel_config.room_count * (hotel_config.overbooking_level + 1))
+    reservations = Reservation.objects.filter(check_in__lt=end, check_out__gt=start)
     check_date = start
     while check_date < end:
-        booked = Reservation.objects.filter(check_in__lte=check_date, check_out__gt=check_date).count()
+        booked = len([r for r in reservations if r.includes_date(check_date)])
         if booked >= bookable:
             raise ValidationError("There are no rooms available for the selected date range")
         check_date += timedelta(days=1)
