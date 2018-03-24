@@ -11,6 +11,12 @@ class HotelConfiguration(SingletonModel):
 
 
 class Reservation(models.Model):
+    class Meta:
+        indexes = [
+            models.Index(fields=["check_in"]),
+            models.Index(fields=["check_out"])
+        ]
+
     id = models.AutoField()
     id.primary_key = True
     name = models.CharField(max_length=255)
